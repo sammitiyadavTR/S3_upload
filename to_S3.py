@@ -1,6 +1,7 @@
 import os  
 import boto3  
 from botocore.exceptions import NoCredentialsError, PartialCredentialsError, ClientError
+from datetime import datetime, timedelta, timezone  # <-- Make sure these are imported
 
 try:  
     S3_CLIENT = boto3.client('s3')  
@@ -35,9 +36,6 @@ def read_file(bucket_name, s3_object_key):
     response = S3_CLIENT.get_object(Bucket=bucket_name, Key=s3_object_key)
     file_content = response['Body'].read().decode('utf-8')
     print(f"Content of '{s3_object_key}':\n{file_content}")
-import boto3  
-from botocore.exceptions import ClientError  
-from datetime import datetime, timedelta, timezone  # <-- Make sure these are imported
   
   
 def list_recent_s3_files(bucket_name, folder_prefix, days=7):  
@@ -91,9 +89,9 @@ def list_recent_s3_files(bucket_name, folder_prefix, days=7):
                         print("No recent files found to be moved")    
   
         for file_obj in old_files: 
-            #s3_object_key = f"{folder_prefix}{file}"
-            #delete_file(bucket_name, file_obj)
-        
+            s3_object_key = f"{folder_prefix}{file}"
+            delete_file(bucket_name, file_obj)
+            
         return recent_files
   
     except ClientError as e:  
