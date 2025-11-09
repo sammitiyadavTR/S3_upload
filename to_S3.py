@@ -89,9 +89,9 @@ def list_recent_s3_files(bucket_name, folder_prefix, days=7):
                         print("No recent files found to be moved")    
   
         for file_obj in old_files: 
-            s3_object_key = f"{folder_prefix}{file}"
+            #s3_object_key = f"{folder_prefix}{file_obj}"
             delete_file(bucket_name, file_obj)
-            
+
         return recent_files
   
     except ClientError as e:  
