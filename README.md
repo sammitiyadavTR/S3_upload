@@ -14,7 +14,11 @@ There are 2 workflows:
 1. upload to S3 temp
    uploads files to the temp folder in the S3 bucket
       -requires bucket-level authorization (authorize through aws-cli)
+      --uploads input files to temp/
+      -retention period for is 30 days
       -run app.py
 3. upload to S3 main
        -requires encryption key at folder level
+       -moves files until 7 days from temp/ to RAIHAssistant/
+       -deletes files older than 30 days from temp/
        -run to_S3.py
